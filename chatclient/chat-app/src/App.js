@@ -1,8 +1,9 @@
 import React from 'react'
+import ChatRoom from './components/ChatRoom'
 
-const App = () => {
+function App() {
   return (
-    <Chatroom />
+    <ChatRoom />
   )
 }
 
