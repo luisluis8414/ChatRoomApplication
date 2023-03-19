@@ -8,8 +8,8 @@ const ChatRoom = () => {
     const [privateChats, setPrivateChats] = useState(new Map());     
     const [publicChats, setPublicChats] = useState([]); 
     const [tab,setTab] =useState("CHATROOM");
-    let [placeholderText, setPlaceholderText] = useState('enter message');
-    let [placeholderTextUsername, setplaceholderTextUsername] = useState('Enter your name :)');
+    let [placeholderText, setPlaceholderText] = useState('enter message 🚀');
+    let [placeholderTextUsername, setplaceholderTextUsername] = useState('Enter your name \u{1F600}');
     const [userData, setUserData] = useState({
         username: '',
         receivername: '',
@@ -92,7 +92,7 @@ const ChatRoom = () => {
               setUserData({...userData,"message": ""});
               setPlaceholderText('Please enter message');
             }else{
-                setPlaceholderText('Please enter text before hitting send');
+                setPlaceholderText('Please enter text before hitting send 🧐');
             }
     }
 
@@ -121,7 +121,7 @@ const ChatRoom = () => {
 
     const registerUser=()=>{
         if(userData.username!=='')connect();
-        else setplaceholderTextUsername("Please enter your username!")
+        else setplaceholderTextUsername("Please enter your username! 😡")
         
     }
 
@@ -150,7 +150,7 @@ const ChatRoom = () => {
                 </ul>
             </div>
             {tab==="CHATROOM" && <div className="chat-content">
-            <div className='heading'>ChatRoom</div>
+            <div className='heading'>😎ChatRoom😎</div>
                 <ul className="chat-messages">
                     {publicChats.map((chat,index)=>(
                         <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
