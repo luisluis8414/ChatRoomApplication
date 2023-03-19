@@ -116,6 +116,19 @@ const ChatRoom = () => {
     const registerUser=()=>{
         connect();
     }
+
+    const handleKeyPress=(event)=> {
+        if (event.key === 'Enter') {
+            sendValue();
+          }
+      }
+
+      const handleConnect=(event)=>{
+        if (event.key === 'Enter') {
+            registerUser();
+          }
+      }
+
     return (
     <div className="container">
         {userData.connected?
@@ -133,15 +146,15 @@ const ChatRoom = () => {
                     {publicChats.map((chat,index)=>(
                         <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
                             {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
-                            <div className="message-data">{chat.message}</div>
                             {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
+                            <div className="message-data">{chat.message}</div>
                         </li>
                     ))}
                 </ul>
 
-                <div className="send-message">
+                <div className="send-message" onKeyDown={handleKeyPress}>
                     <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} /> 
-                    <button type="button" className="send-button" onClick={sendValue}>send</button>
+                    <button type="button" className="send-button" onClick={sendValue} >send</button>
                 </div>
             </div>}
             {tab!=="CHATROOM" && <div className="chat-content">
@@ -162,7 +175,7 @@ const ChatRoom = () => {
             </div>}
         </div>
         :
-        <div className="register">
+        <div className="register" onKeyDown={handleConnect}>
             <input
                 id="user-name"
                 placeholder="Enter your name"
