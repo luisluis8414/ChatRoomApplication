@@ -9,6 +9,7 @@ const ChatRoom = () => {
     const [publicChats, setPublicChats] = useState([]); 
     const [tab,setTab] =useState("CHATROOM");
     let [placeholderText, setPlaceholderText] = useState('enter message');
+    let [placeholderTextUsername, setplaceholderTextUsername] = useState('Enter your name :)');
     const [userData, setUserData] = useState({
         username: '',
         receivername: '',
@@ -119,7 +120,9 @@ const ChatRoom = () => {
     }
 
     const registerUser=()=>{
-        connect();
+        if(userData.username!=='')connect();
+        else setplaceholderTextUsername("Please enter your username!")
+        
     }
 
     const handleKeyPress=(event)=> {
@@ -139,7 +142,7 @@ const ChatRoom = () => {
         {userData.connected?
         <div className="chat-box">
             <div className="member-list">
-                <ul>
+                <ul className='members'>
                     <li onClick={()=>{setTab("CHATROOM")}} className={`member ${tab==="CHATROOM" && "active"}`}>Chatroom</li>
                     {[...privateChats.keys()].map((name,index)=>(
                         <li onClick={()=>{setTab(name)}} className={`member ${tab===name && "active"}`} key={index}>{name}</li>
@@ -147,6 +150,7 @@ const ChatRoom = () => {
                 </ul>
             </div>
             {tab==="CHATROOM" && <div className="chat-content">
+            <div className='heading'>ChatRoom</div>
                 <ul className="chat-messages">
                     {publicChats.map((chat,index)=>(
                         <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
@@ -183,7 +187,7 @@ const ChatRoom = () => {
         <div className="register" onKeyDown={handleConnect}>
             <input
                 id="user-name"
-                placeholder="Enter your name"
+                placeholder={placeholderTextUsername}
                 name="userName"
                 value={userData.username}
                 onChange={handleUsername}
