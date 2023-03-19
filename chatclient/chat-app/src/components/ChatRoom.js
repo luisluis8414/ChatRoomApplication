@@ -3,10 +3,12 @@ import {over} from 'stompjs';
 import SockJS from 'sockjs-client';
 
 var stompClient =null;
+
 const ChatRoom = () => {
     const [privateChats, setPrivateChats] = useState(new Map());     
     const [publicChats, setPublicChats] = useState([]); 
     const [tab,setTab] =useState("CHATROOM");
+    let [placeholderText, setPlaceholderText] = useState('enter message');
     const [userData, setUserData] = useState({
         username: '',
         receivername: '',
@@ -78,7 +80,7 @@ const ChatRoom = () => {
         setUserData({...userData,"message": value});
     }
     const sendValue=()=>{
-            if (stompClient) {
+            if (stompClient&&userData.message!=='') {
               var chatMessage = {
                 senderName: userData.username,
                 message: userData.message,
@@ -87,6 +89,9 @@ const ChatRoom = () => {
               console.log(chatMessage);
               stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
               setUserData({...userData,"message": ""});
+              setPlaceholderText('Please enter message');
+            }else{
+                setPlaceholderText('Please enter text before hitting send');
             }
     }
 
@@ -146,14 +151,14 @@ const ChatRoom = () => {
                     {publicChats.map((chat,index)=>(
                         <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
                             {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
-                            {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
+                            {chat.senderName === userData.username && <div className="avatar self">You</div>}
                             <div className="message-data">{chat.message}</div>
                         </li>
                     ))}
                 </ul>
 
                 <div className="send-message" onKeyDown={handleKeyPress}>
-                    <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} /> 
+                    <input type="text" className="input-message" placeholder={placeholderText} value={userData.message} onChange={handleMessage} /> 
                     <button type="button" className="send-button" onClick={sendValue} >send</button>
                 </div>
             </div>}
@@ -163,13 +168,13 @@ const ChatRoom = () => {
                         <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
                             {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
                             <div className="message-data">{chat.message}</div>
-                            {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
+                            {chat.senderName === userData.username && <div className="avatar self">You</div>}
                         </li>
                     ))}
                 </ul>
 
                 <div className="send-message">
-                    <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} /> 
+                    <input type="text" className="input-message" value={userData.message} onChange={handleMessage} /> 
                     <button type="button" className="send-button" onClick={sendPrivateValue}>send</button>
                 </div>
             </div>}
