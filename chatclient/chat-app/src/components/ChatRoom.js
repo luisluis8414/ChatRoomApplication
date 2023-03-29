@@ -3,6 +3,7 @@ import {over} from 'stompjs';
 import SockJS from 'sockjs-client';
 
 var stompClient =null;
+var currentUser=null;
 
 const ChatRoom = () => {
     const [privateChats, setPrivateChats] = useState(new Map());     
@@ -30,7 +31,7 @@ const ChatRoom = () => {
         setUserData({...userData,"connected": true});
         stompClient.subscribe('/chatroom/public', onMessageReceived);
         stompClient.subscribe('/user/'+userData.username+'/private', onPrivateMessage);
-        userJoin();
+        userJoin();        
     }
 
     const userJoin=()=>{
@@ -117,11 +118,14 @@ const ChatRoom = () => {
 
     const handleUsername=(event)=>{
         const {value}=event.target;
+        currentUser=value;
         setUserData({...userData,"username": value});
     }
 
     const registerUser=()=>{
-        if(userData.username!=='')connect();
+        if(userData.username!==''){
+            connect();
+        }
         else setplaceholderTextUsername("Please enter your username! 😡")
         
     }
@@ -150,8 +154,12 @@ const ChatRoom = () => {
                 <ul className='member'>
                     <li onClick={()=>{setTab("CHATROOM")}} className={`member ${tab==="CHATROOM" && "active"}`}>Chatroom</li>
                     {[...privateChats.keys()].map((name,index)=>(
-                        <li onClick={()=>{setTab(name)}} className={`member ${tab===name && "active"}`} key={index}>{name}</li>
+                        // Add a check for user.username !== currentUser.username
+                        name !== currentUser && (
+                            <li onClick={()=>{setTab(name)}} className={`member ${tab===name && "active"}`} key={index}>{name}</li>
+                        )
                     ))}
+
                 </ul>
             </div>
             {tab==="CHATROOM" && <div className="chat-content">
