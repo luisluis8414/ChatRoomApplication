@@ -20,7 +20,7 @@ Enter a username
 
 U are now connected to the chatroom. On the leftside u can see other users. 
 
-![image](https://user-images.githubusercontent.com/86251888/228527134-cd1ca935-82ef-441f-a123-92a109578986.png)
+![image](https://user-images.githubusercontent.com/86251888/228527978-12e39d5b-6241-46d4-b060-8c52d64aba42.png)
 
 Chatroom is the groupchat for everyone. To add another user just open the link in another tab. The new user should then appear on the left side. U can now directly message the other user.
 
