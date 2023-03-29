@@ -76,6 +76,7 @@ const ChatRoom = () => {
         
     }
 
+
     const handleMessage =(event)=>{
         const {value}=event.target;
         setUserData({...userData,"message": value});
@@ -124,7 +125,11 @@ const ChatRoom = () => {
         else setplaceholderTextUsername("Please enter your username! 😡")
         
     }
-
+    const handleKeyPressPrivate=(event)=>{
+        if (event.key === 'Enter') {
+            sendPrivateValue();
+          }
+    }
     const handleKeyPress=(event)=> {
         if (event.key === 'Enter') {
             sendValue();
@@ -167,6 +172,7 @@ const ChatRoom = () => {
                 </div>
             </div>}
             {tab!=="CHATROOM" && <div className="chat-content">
+            <div className='heading'>😎ChatRoom😎</div>
                 <ul className="chat-messages">
                     {[...privateChats.get(tab)].map((chat,index)=>(
                         <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
@@ -178,7 +184,7 @@ const ChatRoom = () => {
                 </ul>
 
                 <div className="send-message">
-                    <input type="text" className="input-message" value={userData.message} onChange={handleMessage} /> 
+                    <input type="text" onKeyDown={handleKeyPressPrivate} className="input-message" placeholder={placeholderText}value={userData.message} onChange={handleMessage} /> 
                     <button type="button" className="send-button" onClick={sendPrivateValue}>send</button>
                 </div>
             </div>}
