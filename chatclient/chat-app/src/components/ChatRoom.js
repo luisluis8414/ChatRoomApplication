@@ -90,7 +90,7 @@ const ChatRoom = () => {
               console.log(chatMessage);
               stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
               setUserData({...userData,"message": ""});
-              setPlaceholderText('Please enter message');
+              setPlaceholderText('Please enter message 🤠');
             }else{
                 setPlaceholderText('Please enter text before hitting send 🧐');
             }
