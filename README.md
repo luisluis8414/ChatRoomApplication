@@ -16,8 +16,6 @@ it should now run on: http://localhost:3000/
 
 Enter a username
 
-![image](https://user-images.githubusercontent.com/86251888/228528174-48ecc1f1-a216-43c3-aada-1f47a2868e0e.png)
-
 U are now connected to the chatroom. On the leftside u can see other users. 
 
 ![image](https://user-images.githubusercontent.com/86251888/228527978-12e39d5b-6241-46d4-b060-8c52d64aba42.png)
